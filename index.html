@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Follow Checker - Versi Trial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="app-trial.js" defer></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4 relative">
+    
+    <div class="bg-white shadow-lg rounded-lg p-6 md:p-8 w-full max-w-3xl border border-gray-200">
+        <div class="flex justify-center mb-2">
+            <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded border border-yellow-300">VERSI TRIAL - GRATIS</span>
+        </div>
+
+        <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-700">Cek Siapa yang Belum Follback Kamu!</h1>
+        <h1 class="text-base md:text-lg font-semibold text-center text-gray-600 mb-4 mt-2">
+            by <a class="underline text-blue-600 hover:text-blue-800" href="https://www.instagram.com/jimialvndi_" target="_blank">@jimialvndi_</a>
+        </h1>
+        <div class="text-center mb-6">
+            <a class="text-sm md:text-base font-medium underline text-blue-500 hover:text-blue-700" href="https://www.tiktok.com/@jimialvndii_/video/7453801966288915719?is_from_webapp=1&sender_device=pc&web_id=7298410693535352321" target="_blank">Tonton Cara Penggunaannya disini</a>
+        </div>
+        
+        <form id="upload-form" class="space-y-4">
+            <div>
+                <label for="followersFile" class="block text-sm font-medium text-gray-700 mb-1">Upload Followers JSON File (followers_1.json):</label>
+                <input type="file" id="followersFile" accept=".json" class="block w-full border border-gray-300 rounded-lg p-2 text-sm bg-gray-50">
+            </div>
+            <div>
+                <label for="followingFile" class="block text-sm font-medium text-gray-700 mb-1">Upload Following JSON File (following.json):</label>
+                <input type="file" id="followingFile" accept=".json" class="block w-full border border-gray-300 rounded-lg p-2 text-sm bg-gray-50">
+            </div>
+            <button type="button" id="checkBtn" class="w-full bg-blue-600 hover:bg-blue-700 transition-colors text-white font-bold py-3 px-4 rounded-lg mt-4">
+                Check Sekarang
+            </button>
+        </form>
+
+        <div id="results" class="mt-8">
+            <h2 class="text-xl font-semibold text-gray-700 mb-3">Akun yang Kamu Follow tapi Tidak Follback:</h2>
+            <div class="mb-4">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Cari username..." 
+                    class="w-full border border-gray-300 bg-gray-50 focus:border-blue-500 focus:ring focus:ring-blue-200 outline-none rounded-lg p-2 transition-all"
+                >
+            </div>
+            <div class="overflow-x-auto rounded-lg border border-gray-200">
+                <table id="not-following-back" class="table-auto w-full text-left border-collapse">
+                    <thead class="bg-blue-500 text-white">
+                        <tr>
+                            <th class="px-4 py-3 w-16 text-center border-b">No.</th>
+                            <th class="px-4 py-3 border-b">Username Instagram</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200"></tbody>
+                </table>
+            </div>
+            
+            <div id="upsellMessage" class="mt-4 hidden text-center p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <p class="text-gray-700 font-medium mb-2" id="upsellText"></p>
+                <a href="https://lynk.id/jimialvndi_" target="_blank" class="inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-full shadow-md transition-all animate-bounce">
+                    Akses Versi Full Sekarang!
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="securityPopup" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-[60]">
+        <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md text-center border border-transparent">
+            <div class="mb-4 text-green-500 flex justify-center">
+                <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 mb-2">100% Aman & Privasi Terjaga 🔒</h3>
+            <p class="text-sm text-gray-600 mb-5 text-left">
+                Website ini berjalan sepenuhnya di perangkat lokal Anda (Browser). <br><br>
+                <strong>Developer tidak menyimpan, melihat, atau memiliki akses ke data JSON yang Anda upload.</strong> Semua proses pengecekan data terjadi langsung di dalam HP/Laptop Anda sendiri.
+            </p>
+            <button id="understandSecurityBtn" class="w-full bg-green-600 hover:bg-green-700 transition-colors text-white font-bold py-2 px-4 rounded-lg">
+                Saya Mengerti
+            </button>
+        </div>
+    </div>
+
+    <div id="followPopup" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-sm text-center border border-transparent">
+            <h3 class="text-xl font-bold text-gray-800 mb-2">Dukung Developer! 🚀</h3>
+            <p class="text-sm text-gray-600 mb-5">Follow akun IG saya ya, pasti di-follback. Anggap saja nambah teman diskusi :)</p>
+            <a id="followLink" href="https://www.instagram.com/jimialvndi_/" target="_blank" class="block w-full bg-blue-600 hover:bg-blue-700 transition-colors text-white font-bold py-2 px-4 rounded-lg mb-3">
+                Follow @jimialvndi_
+            </a>
+            <button id="confirmFollowBtn" class="hidden w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg transition-colors border border-gray-300">
+                Saya Sudah Follow
+            </button>
+        </div>
+    </div>
+</body>
+</html>
